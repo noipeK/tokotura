@@ -1,5 +1,33 @@
 # {{repository_name}} contributing guide
 
+## Setting up the environment
+
+Set up a virtual environment - [venv](https://docs.python.org/3/library/venv.html) is recommended - and install the dev dependencies.
+
+```
+python -m venv .venv
+source .venv/bin/activate
+
+pip install ./dev-requirements[all]
+```
+
+### VSCode
+
+`.vscode/settings.json`
+
+```json
+{
+  "editor.formatOnSave": true,
+  "python.linting.flake8Enabled": true,
+  "python.linting.enabled": true,
+  "python.linting.flake8Path": ".nox/lint/bin/pflake8"
+}
+```
+
+### PyCharm
+
+`¯\_(ツ)_/¯`
+
 ## Pipelines
 
 CI is run using [`nox`](https://nox.thea.codes/). Before creating a PR make sure all default pipelines have passed.

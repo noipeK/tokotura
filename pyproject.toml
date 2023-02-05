@@ -54,7 +54,8 @@ per-file-ignores = [
     "**/__init__.py: D40, F401, F403",
     "tests/**: D10, S10, F841, I900",
     "noxfile.py: I900",
-    "docs/conf.py: I900",
+    "docs/**: I900",
+    "dev-requirements/**: I900",
 ]
 max-complexity = 15
 max-function-length = 100

@@ -11,5 +11,5 @@ setup(
     package_data={"{{cookicutter.name}}": ["py.typed"]},
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
-    license="MIT"
+    license="MIT",
 )
