@@ -12,7 +12,7 @@ nox.options.sessions = ["reformat", "lint", "type-check", "verify-types", "test"
 nox.options.reuse_existing_virtualenvs = True
 PACKAGE = "{{repository_name}}"
 GENERAL_TARGETS = ["./{{repository_name}}", "./tests", "./noxfile.py", "docs/conf.py"]
-PRETTIER_TARGETS = ["*.md", "docs/*.md", "docs/**/*.md", "*.yml", "*.toml"]
+PRETTIER_TARGETS = ["*.md", "docs/*.md", "docs/**/*.md", "*.toml"]
 PYRIGHT_ENV = {"PYRIGHT_PYTHON_FORCE_VERSION": "latest"}
 
 LOGGER = logging.getLogger("nox")
@@ -40,7 +40,7 @@ def install_requirements(session: nox.Session, *requirements: str, literal: bool
 
 @nox.session()
 def docs(session: nox.Session) -> None:
-    """Generate docs for this project using Pdoc."""
+    """Generate docs for this project using sphinx."""
     install_requirements(session, "docs")
 
     output = "docs/_build/html"
