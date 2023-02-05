@@ -8,10 +8,11 @@ import typing
 
 import nox
 
-nox.options.sessions = ["reformat", "lint", "type-check", "verify-types", "test"]
+nox.options.sessions = ["reformat", "lint", "type-check", "verify-types", "test", "prettier"]
 nox.options.reuse_existing_virtualenvs = True
 PACKAGE = "{{repository_name}}"
 GENERAL_TARGETS = ["./{{repository_name}}", "./tests", "./noxfile.py", "docs/conf.py"]
+PRETTIER_TARGETS = ["*.md", "docs/*.md", "docs/**/*.md", "*.yml", "*.toml"]
 PYRIGHT_ENV = {"PYRIGHT_PYTHON_FORCE_VERSION": "latest"}
 
 LOGGER = logging.getLogger("nox")
@@ -141,8 +142,12 @@ def verify_types(session: nox.Session) -> None:
 @nox.session(python=False)
 def prettier(session: nox.Session) -> None:
     """Run prettier on markdown files."""
-    process = session.run("prettier", "--version", silent=True, external=True)
-    if not process or process.returncode != 0:
-        return
+    try:
+        session.run("prettier", "--version", silent=True, external=True)
+    except Exception as exception:
+        if str(exception) == "Program prettier not found":
+            session.skip()
+
+        raise
 
     session.run("prettier", "-w", "*.md", "docs/*.md", "docs/**/*.md", "*.yml", external=True)
