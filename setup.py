@@ -1,4 +1,6 @@
 """Run setuptools."""
+import pathlib
+
 from setuptools import find_packages, setup
 
 setup(
@@ -9,7 +11,7 @@ setup(
     packages=find_packages(exclude=["tests.*"]),
     include_package_data=True,
     package_data={"{{repository_name}}": ["py.typed"]},
-    long_description=open("README.md", encoding="utf-8").read(),
+    long_description=pathlib.Path("README.md").read_text(),
     long_description_content_type="text/markdown",
     license="MIT",
 )
