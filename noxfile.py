@@ -9,8 +9,8 @@ import nox
 
 nox.options.sessions = ["reformat", "lint", "type-check", "verify-types", "test", "prettier"]
 nox.options.reuse_existing_virtualenvs = True
-PACKAGE = "{{repository_name}}"
-GENERAL_TARGETS = ["./{{repository_name}}", "./tests", "./noxfile.py", "docs/conf.py"]
+PACKAGE = "tokotura"
+GENERAL_TARGETS = ["./tokotura", "./tests", "./noxfile.py", "docs/conf.py"]
 PRETTIER_TARGETS = ["*.md", "docs/*.md", "docs/**/*.md", "*.toml"]
 PYRIGHT_ENV = {"PYRIGHT_PYTHON_FORCE_VERSION": "latest"}
 
@@ -115,6 +115,7 @@ def test(session: nox.Session) -> None:
         *verbose_args(),
         *args,
         *session.posargs,
+        success_codes=[0, 5],
     )
 
     if "--cov" in args:

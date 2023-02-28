@@ -17,30 +17,46 @@ jobs:
               -H "Accept: application/vnd.github.baptiste-preview+json" \
           )
 
-          echo $REPOSITORY_DATA | jq --exit-status '.is_template == false'
+          IS_TEMPLATE=$(echo $REPOSITORY_DATA | jq '.is_template')
+          echo "is template: $IS_TEMPLATE"
+          if [[ "$IS_TEMPLATE" == "true" ]]
+          then
+            exit 0
+          fi
+
+          ORIGINAL_REPOSITORY_NAME=$(echo $REPOSITORY_DATA | jq -r '.template_repository.name')
+          ORIGINAL_REPOSITORY_URL=$(echo $REPOSITORY_DATA | jq -r '.template_repository.html_url')
+          ORIGINAL_REPOSITORY_DESCRIPTION=$(echo $REPOSITORY_DATA | jq -r '.template_repository.description')
+          echo "origin: $ORIGINAL_REPOSITORY_URL : $ORIGINAL_REPOSITORY_NAME - $ORIGINAL_REPOSITORY_DESCRIPTION"
 
           REPOSITORY_NAME=$(echo $REPOSITORY_DATA | jq -r '.name')
-          REPOSITORY_OWNER=$(echo $REPOSITORY_DATA | jq -r '.owner.login')
+          REPOSITORY_URL=$(echo $REPOSITORY_DATA | jq -r '.html_url')
           REPOSITORY_DESCRIPTION=$(echo $REPOSITORY_DATA | jq -r '.description')
-          echo "$REPOSITORY_OWNER/$REPOSITORY_NAME - $REPOSITORY_DESCRIPTION"
+          echo "$REPOSITORY_URL : $REPOSITORY_NAME - $REPOSITORY_DESCRIPTION"
+
+          if ! [[ -d "$ORIGINAL_REPOSITORY_NAME" ]]
+          then
+            echo "repository already updated, please delete CI file"
+            exit 0
+          fi
 
           for filename in $(git ls-files)
           do
-              if [[ "$filename" == *"workflows"* ]]
-              then
-                continue
-              fi
+            if [[ "$filename" == *"workflows"* ]]
+            then
+              continue
+            fi
 
-              sed -i "s/{{repository_name}}/$REPOSITORY_NAME/g" $filename
-              sed -i "s/{{repository_owner}}/$REPOSITORY_OWNER/g" $filename
-              sed -i "s/{{repository_description}}/$REPOSITORY_DESCRIPTION/g" $filename
-              echo "Changed $filename"
+            sed -i "s|$ORIGINAL_REPOSITORY_NAME|$REPOSITORY_NAME|g" $filename
+            sed -i "s|$ORIGINAL_REPOSITORY_URL|$REPOSITORY_URL|g" $filename
+            sed -i "s|$ORIGINAL_REPOSITORY_DESCRIPTION|$REPOSITORY_DESCRIPTION|g" $filename
+            echo "Changed $filename"
           done
 
-          mv "{{repository_name}}" "$REPOSITORY_NAME"
+          mv "$ORIGINAL_REPOSITORY_NAME" "$REPOSITORY_NAME"
 
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           git add .
-          git commit -m 'Update template'
+          git commit -m 'Update template metadata.'
           git push

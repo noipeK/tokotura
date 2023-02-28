@@ -1,1 +1,1 @@
-"""{{repository_name}} tests."""
+"""Pytest tests."""

@@ -1,10 +1,10 @@
-# {{repository_name}}
+# tokotura
 
-{{repository_description}}
+Snake guide.
 
 ---
 
-Source Code: https://github.com/{{repository_owner}}/{{repository_name}}
+Source Code: https://github.com/noipeK/tokotura
 
 ---
 
