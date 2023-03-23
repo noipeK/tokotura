@@ -4,7 +4,7 @@
 
 Set up a virtual environment - [venv](https://docs.python.org/3/library/venv.html) is recommended - and install the dev dependencies.
 
-```
+```sh
 python -m venv .venv
 source .venv/bin/activate
 

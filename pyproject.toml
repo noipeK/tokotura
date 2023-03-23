@@ -34,6 +34,7 @@ line-length = 130
 # EM: String literal in exception
 # ERA: Commented-out code
 # FBT: Boolean in positional function type (duck-typing)
+# SLF: Private member access
 # TCH: Not using TYPE_CHECKING (ugly)
 # ANN10: Missing type annotation for self/cls (useless)
 # ANN401: Use of typing.Any (complicates)
@@ -43,6 +44,7 @@ line-length = 130
 # C408: Unnecessary dict call (ugly)
 # D105: Missing docstring in magic method (useless)
 # N805: First argument is not self (pydantic)
+# PGH003: Specific rules when ignoring type issues
 # PLR0913: Too many arguments
 # PLR2004: constant value in comparison (asserts)
 # PLW2901: Redefining for-loop variable
@@ -56,6 +58,7 @@ ignore = [
   "EM",
   "ERA",
   "FBT",
+  "SLF",
   "TCH",
   "ANN10",
   "ANN401",
@@ -65,6 +68,7 @@ ignore = [
   "C408",
   "D105",
   "N805",
+  "PGH003",
   "PLR0913",
   "PLR2004",
   "PLW2901",
