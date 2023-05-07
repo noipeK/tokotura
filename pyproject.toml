@@ -86,6 +86,8 @@ unfixable = ["F401", "F841", "B007"]
 [tool.ruff.per-file-ignores]
 # F40: import (unused imports)
 "**/__init__.py" = ["F40"]
+# T201: use of print
+"**/__main__.py" = ["T201"]
 # D10: missing docstring (tests)
 # F841: unused variable (return values)
 # S10: hardcoded passwords (dummy values)
