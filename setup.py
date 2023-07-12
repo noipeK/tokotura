@@ -12,10 +12,8 @@ setup(
     include_package_data=True,
     package_data={"tokotura": ["py.typed"]},
     install_requires=[],
-    extras_require={
-      "all": [],
-    },
-    long_description=pathlib.Path("README.md").read_text(),
+    extras_require={"all": []},
+    long_description=pathlib.Path("README.md").read_text(encoding="utf-8"),
     long_description_content_type="text/markdown",
     license="MIT",
 )

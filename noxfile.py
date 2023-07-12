@@ -11,7 +11,7 @@ nox.options.sessions = ["reformat", "lint", "type-check", "verify-types", "test"
 nox.options.reuse_existing_virtualenvs = True
 PACKAGE = "tokotura"
 GENERAL_TARGETS = ["./tokotura", "./tests", "./noxfile.py", "docs/conf.py"]
-PRETTIER_TARGETS = ["*.md", "docs/*.md", "docs/**/*.md", "*.toml"]
+PRETTIER_TARGETS = ["*.md", "docs/*.md", "docs/**/*.md", "*.yml", ".github/**/*.yml"]
 PYRIGHT_ENV = {"PYRIGHT_PYTHON_FORCE_VERSION": "latest"}
 
 LOGGER = logging.getLogger("nox")
@@ -157,4 +157,4 @@ def prettier(session: nox.Session) -> None:
     if not _try_install_prettier(session):
         session.skip("Prettier not installed")
 
-    session.run("prettier", "-w", "*.md", "docs/*.md", "docs/**/*.md", "*.yml", "*.toml", external=True)
+    session.run("prettier", "-w", *PRETTIER_TARGETS, *verbose_args(), external=True)
